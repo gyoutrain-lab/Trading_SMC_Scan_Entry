@@ -115,13 +115,13 @@ const TFMS={'5m':3e5,'15m':9e5,'1h':36e5,'4h':144e5,'1d':864e5,'1w':6048e5};
 const TD={'5m':'5min','15m':'15min','1h':'1h','4h':'4h','1d':'1day','1w':'1week'};
 const HTF={'5m':'1h','15m':'4h','1h':'4h','4h':'1d','1d':'1w'};
 const STYLE={'5m':'Scalp','15m':'Intraday','1h':'Day','4h':'Swing','1d':'Position'};
-const PRE={'Gold, Silver & Majors':'XAU/USD,XAG/USD,EUR/USD,GBP/USD,USD/JPY,AUD/USD,USD/CAD,GBP/JPY',
-'Forex majors':'EUR/USD,GBP/USD,USD/JPY,AUD/USD,USD/CAD,USD/CHF,NZD/USD,EUR/JPY,GBP/JPY',
-'Gold & Silver':'XAU/USD,XAG/USD',
-'US stocks':'AAPL,MSFT,NVDA,TSLA,AMZN,META,GOOGL',
-'ETF':'SPY,QQQ,IWM,GLD,SLV,TLT,XLE',
-'Futures (plan-dependent)':'ES,NQ,GC,SI,CL',
-'Crypto':'BTC/USD,ETH/USD,SOL/USD'};
+const PRE={'Focus 8 · Gold, FX, Index (free-plan friendly)':'XAU/USD,XAG/USD,EUR/USD,GBP/USD,USD/JPY,GBP/JPY,SPY,QQQ',
+'Tier 1 · Gold & Silver':'XAU/USD,XAG/USD,GLD,SLV',
+'Tier 1 · Forex majors + crosses':'EUR/USD,GBP/USD,USD/JPY,GBP/JPY,AUD/USD,USD/CAD,EUR/JPY,USD/CHF',
+'Tier 1 · Index ETFs':'SPY,QQQ,IWM,DIA,XLK,XLF',
+'Tier 2 · US mega-cap (NY session only)':'NVDA,TSLA,AAPL,MSFT,AMZN,META,AMD,GOOGL',
+'Weekend · Crypto (24/7)':'BTC/USD,ETH/USD,SOL/USD,XRP/USD',
+'Energy & macro proxies (ETF)':'USO,TLT,UUP,GDX'};
 const decs=p=>p>=1000?2:p>=100?3:p>=1?4:6;
 const fmt=p=>(p==null||isNaN(p))?'–':p.toFixed(decs(Math.abs(p)));
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -481,7 +481,7 @@ $('#mtfBtn').addEventListener('click',mtf);
 /* ===== SCREENER ===== */
 $('#pre').innerHTML=Object.keys(PRE).map(k=>`<option>${k}</option>`).join('');
 $('#pre').addEventListener('change',()=>{$('#wl').value=PRE[$('#pre').value];store('wl',$('#wl').value)});
-$('#wl').value=store('wl')||PRE['Gold, Silver & Majors'];
+$('#wl').value=store('wl')||PRE[Object.keys(PRE)[0]];
 $('#wl').addEventListener('change',()=>store('wl',$('#wl').value));
 function renderScan(){
   const rank=r=>r.err?-1:(r.sg.entry!=null?100:0)+r.sg.score*10+(r.sg.inZone?5:0)-Math.min(r.sg.dist||9,9)/10;
